@@ -19,6 +19,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Extentions\" />
+	  <ProjectReference Include="..\RecruitmentInfrastructure\RecruitmentInfrastructure.csproj" />
 	</ItemGroup>
 </Project>

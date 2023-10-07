@@ -1,16 +1,29 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RecruitmentApi.Extentions;
+using RecruitmentInfrastructure.Data;
+using RecruitmentInfrastructure.Data.Interface;
+
 
 var host = new WebHostBuilder()
             .UseKestrel()
-            .ConfigureServices(services =>
+            .ConfigureServices(async services =>
             {
                 services.AddCors();
                 services.AddRouting();
                 services.AddControllers();
                 services.AddAntiforgery();
-                
+
+                services.AddScoped<ICosmoDbService, CosmosDbService>();
+
+                services.ConfigureServices();
+                var serviceProvider = services.BuildServiceProvider();
+                using var scope = serviceProvider.CreateScope();
+                var cosmosDbService = scope.ServiceProvider.GetRequiredService<CosmosDbService>();
+                await cosmosDbService.InitializeAsync();
+
             })
             .Configure(app =>
             {
