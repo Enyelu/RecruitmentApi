@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="MediatR" Version="12.1.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Azure.Cosmos" Version="3.35.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
