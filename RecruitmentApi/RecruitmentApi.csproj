@@ -19,6 +19,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\RecruitmentCore\RecruitmentCore.csproj" />
+	  <ProjectReference Include="..\RecruitmentDomain\RecruitmentDomain.csproj" />
 	  <ProjectReference Include="..\RecruitmentInfrastructure\RecruitmentInfrastructure.csproj" />
 	</ItemGroup>
 </Project>

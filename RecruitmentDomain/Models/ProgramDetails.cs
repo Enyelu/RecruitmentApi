@@ -1,9 +1,12 @@
-﻿using RecruitmentDomain.Enums;
+﻿using RecruitmentDomain.Entities;
+using RecruitmentDomain.Enums;
 
-namespace RecruitmentDomain.Entities
+namespace RecruitmentDomain.Models
 {
-    public class ProgramDetail : BaseEntity
+    public class ProgramDetails
     {
+        public string? id { get; set; }
+        public bool IsUpdate { get; set; }
         public string Title { get; set; }
         public List<Skills> Skills { get; set; }
         public string Benefits { get; set; }
@@ -19,12 +22,5 @@ namespace RecruitmentDomain.Entities
         public DateTime ApplicationClose { get; set; }
         public ProgramDuration Duration { get; set; }
         public MinQualification MinQualification { get; set; }
-    }
-
-    public class ObjectData
-    {
-        public string Link { get; set; }
-        public string Content { get; set; }
-        public string ImageUrl { get; set; }
     }
 }
