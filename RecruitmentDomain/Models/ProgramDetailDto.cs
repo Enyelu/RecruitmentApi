@@ -3,7 +3,7 @@ using RecruitmentDomain.Enums;
 
 namespace RecruitmentDomain.Models
 {
-    public class ProgramDetails
+    public class ProgramDetailsDto
     {
         public string? id { get; set; }
         public bool IsUpdate { get; set; }
