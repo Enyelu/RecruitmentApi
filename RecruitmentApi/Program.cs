@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using RecruitmentApi.Extentions;
+using RecruitmentApi.Middlewares;
 using RecruitmentCore;
 using RecruitmentInfrastructure.Data;
 
@@ -14,12 +15,7 @@ var host = new WebHostBuilder()
                 services.AddRouting();
                 services.AddControllers();
                 services.AddAntiforgery();
-
-                
-
                 services.AddCore();
-
-
 
               //  services.AddScoped<ICosmoDbService, CosmosDbService>();
 
@@ -33,6 +29,7 @@ var host = new WebHostBuilder()
             .Configure(app =>
             {
                 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                app.ConfigureExceptionHandler();
                 app.UseHttpsRedirection();
                 app.UseRouting(); // Enable routing
 
