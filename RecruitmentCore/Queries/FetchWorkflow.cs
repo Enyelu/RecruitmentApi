@@ -7,11 +7,11 @@ using RecruitmentInfrastructure.Data;
 
 namespace RecruitmentCore.Queries
 {
-    public class FetchApplicationForm
+    public class FetchWorkflow
     {
-        public record Query(string id) : IRequest<GenericResponse<List<ApplicationFormDto>>>;
+        public record Query(string id) : IRequest<GenericResponse<List<WorkflowDto>>>;
 
-        public class ProgramDetailHandler : IRequestHandler<Query, GenericResponse<List<ApplicationFormDto>>>
+        public class ProgramDetailHandler : IRequestHandler<Query, GenericResponse<List<WorkflowDto>>>
         {
             private readonly IMapper _mapper;
             private readonly CosmosDbService _dbService;
@@ -24,18 +24,18 @@ namespace RecruitmentCore.Queries
                 _dbService = new CosmosDbService(connectionString, databaseId, containerId);
             }
 
-            public async Task<GenericResponse<List<ApplicationFormDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<GenericResponse<List<WorkflowDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var items = await _dbService.GetManyAsync<ApplicationForm>($"SELECT * FROM c WHERE c.id = '{request.id}' AND c.IsDeleted = false");
+                var items = await _dbService.GetManyAsync<Workflow>($"SELECT * FROM c WHERE c.id = '{request.id}' AND c.IsDeleted = false");
 
                 if (items.Count() == 0)
                 {
-                    return GenericResponse<List<ApplicationFormDto>>.NotFound($"Application detail not found.");
+                    return GenericResponse<List<WorkflowDto>>.NotFound($"Workflow not found.");
                 }
 
-                var response = _mapper.Map<List<ApplicationFormDto>>(items);
+                var response = _mapper.Map<List<WorkflowDto>>(items);
 
-                return GenericResponse<List<ApplicationFormDto>>.Success(response, "Successful");
+                return GenericResponse<List<WorkflowDto>>.Success(response, "Successful");
             }
         }
     }
