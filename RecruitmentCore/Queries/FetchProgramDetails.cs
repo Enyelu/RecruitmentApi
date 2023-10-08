@@ -26,7 +26,7 @@ namespace RecruitmentCore.Queries
 
             public async Task<GenericResponse<List<ProgramDetailsDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var items = await _dbService.GetManyAsync<ProgramDetail>($"SELECT * FROM c WHERE c.CreatedOn >= '{request.startDate?.ToString("yyyy-MM-dd")}' AND c.CreatedOn <= '{request.endDate?.ToString("yyyy-MM-dd")}'");
+                var items = await _dbService.GetManyAsync<ProgramDetail>($"SELECT * FROM c WHERE c.CreatedOn >= '{request.startDate?.ToString("yyyy-MM-dd")}' AND c.CreatedOn <= '{request.endDate?.ToString("yyyy-MM-dd")}' AND c.IsDeleted = false");
 
                 if (items.Count() == 0)
                 {
