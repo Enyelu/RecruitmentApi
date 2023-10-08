@@ -13,6 +13,9 @@ namespace RecruitmentCore.Profiles
 
             CreateMap<ApplicationFormDto, ApplicationForm>()
                    .ReverseMap();
+
+            CreateMap<WorkflowDto, Workflow>()
+                   .ReverseMap();
         }
     }
 }
