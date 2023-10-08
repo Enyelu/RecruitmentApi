@@ -19,7 +19,7 @@ namespace RecruitmentApi.Controllers
 
         [HttpPost("Upsert")]
         [Produces("application/json", Type = typeof(GenericResponse<string>))]
-        public async Task<IActionResult> Create([FromBody]ProgramDetails command)
+        public async Task<IActionResult> Create([FromBody]ProgramDetailsDto command)
         {
             if (!command.IsUpdate) 
             { 
@@ -29,12 +29,12 @@ namespace RecruitmentApi.Controllers
             var detail = _mapper.Map<ProgramDetail>(command);
             detail.id = Guid.NewGuid().ToString();
 
-            var respons = await Mediator.Send(new UpsertProgramDetail.Command(detail));
+            var respons = await Mediator.Send(new UpsertProgramDetail.Command(detail, command.IsUpdate));
             return Ok(respons);
         }
 
         [HttpGet()]
-        [Produces("application/json", Type = typeof(GenericResponse<ProgramDetails>))]
+        [Produces("application/json", Type = typeof(GenericResponse<ProgramDetailsDto>))]
         public async Task<IActionResult> Fetch(string id)
         {
             var response = await Mediator.Send(new FetchProgramDetail.Query(id));
@@ -42,7 +42,7 @@ namespace RecruitmentApi.Controllers
         }
 
         [HttpGet("All")]
-        [Produces("application/json", Type = typeof(GenericResponse<List<ProgramDetails>>))]
+        [Produces("application/json", Type = typeof(GenericResponse<List<ProgramDetailsDto>>))]
         public async Task<IActionResult> FetchMany(DateTime? startDate, DateTime? endDate)
         {
             startDate ??= DateTime.Now.AddDays(-30);

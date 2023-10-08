@@ -9,9 +9,9 @@ namespace RecruitmentCore.Queries
 {
     public class FetchProgramDetails
     {
-        public record Query(DateTime? startDate, DateTime? endDate) : IRequest<GenericResponse<List<ProgramDetails>>>;
+        public record Query(DateTime? startDate, DateTime? endDate) : IRequest<GenericResponse<List<ProgramDetailsDto>>>;
 
-        public class ProgramDetailHandler : IRequestHandler<Query, GenericResponse<List<ProgramDetails>>>
+        public class ProgramDetailHandler : IRequestHandler<Query, GenericResponse<List<ProgramDetailsDto>>>
         {
             private readonly IMapper _mapper;
             private readonly CosmosDbService _dbService;
@@ -24,18 +24,18 @@ namespace RecruitmentCore.Queries
                 _dbService = new CosmosDbService(connectionString, databaseId, containerId);
             }
 
-            public async Task<GenericResponse<List<ProgramDetails>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<GenericResponse<List<ProgramDetailsDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var items = await _dbService.GetManyAsync<ProgramDetail>($"SELECT * FROM c WHERE c.CreatedOn >= '{request.startDate?.ToString("yyyy-MM-dd")}' AND c.CreatedOn <= '{request.endDate?.ToString("yyyy-MM-dd")}'");
 
                 if (items.Count() == 0)
                 {
-                    return GenericResponse<List<ProgramDetails>>.NotFound($"Program detail list is empty.");
+                    return GenericResponse<List<ProgramDetailsDto>>.NotFound($"Program details list is empty.");
                 }
 
-                var response = _mapper.Map<List<ProgramDetails>>(items);
+                var response = _mapper.Map<List<ProgramDetailsDto>>(items);
                  
-                return GenericResponse<List<ProgramDetails>>.Success(response, "Successful");
+                return GenericResponse<List<ProgramDetailsDto>>.Success(response, "Successful");
             }
         }
     }

@@ -7,11 +7,11 @@ using RecruitmentInfrastructure.Data;
 
 namespace RecruitmentCore.Queries
 {
-    public class FetchProgramDetail
+    public class FetchApplicationForm
     {
-        public record Query(string id) : IRequest<GenericResponse<List<ProgramDetailsDto>>>;
+        public record Query(string id) : IRequest<GenericResponse<List<ApplicationFormDto>>>;
 
-        public class ProgramDetailHandler : IRequestHandler<Query, GenericResponse<List<ProgramDetailsDto>>>
+        public class ProgramDetailHandler : IRequestHandler<Query, GenericResponse<List<ApplicationFormDto>>>
         {
             private readonly IMapper _mapper;
             private readonly CosmosDbService _dbService;
@@ -24,18 +24,18 @@ namespace RecruitmentCore.Queries
                 _dbService = new CosmosDbService(connectionString, databaseId, containerId);
             }
 
-            public async Task<GenericResponse<List<ProgramDetailsDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<GenericResponse<List<ApplicationFormDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var items = await _dbService.GetManyAsync<ProgramDetail>($"SELECT * FROM c WHERE c.id = '{request.id}' AND c.IsDeleted = false");
+                var items = await _dbService.GetManyAsync<ApplicationForm>($"SELECT * FROM c WHERE c.id >= '{request.id}'");
 
-                if (items.Count() == 0 || items.Count() > 1)
+                if (items.Count() == 0)
                 {
-                    return GenericResponse<List<ProgramDetailsDto>>.NotFound($"Program detail for {request.id} not found.");
+                    return GenericResponse<List<ApplicationFormDto>>.NotFound($"Application detail not found.");
                 }
 
-                var response = _mapper.Map<List<ProgramDetailsDto>>(items);
+                var response = _mapper.Map<List<ApplicationFormDto>>(items);
 
-                return GenericResponse<List<ProgramDetailsDto>>.Success(response, "Successful");
+                return GenericResponse<List<ApplicationFormDto>>.Success(response, "Successful");
             }
         }
     }

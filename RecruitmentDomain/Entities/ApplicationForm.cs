@@ -4,6 +4,7 @@ namespace RecruitmentDomain.Entities
 {
     public class ApplicationForm : BaseEntity
     {
+        public string ProgramDetailId { get; set; }
         public string Email { get; set; }
         public bool IsDraft { get; set; }
         public string LastName { get; set; }
