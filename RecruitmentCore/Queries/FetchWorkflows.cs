@@ -3,7 +3,7 @@ using MediatR;
 using RecruitmentCore.Common;
 using RecruitmentDomain.Entities;
 using RecruitmentDomain.Models;
-using RecruitmentInfrastructure.Data;
+using RecruitmentInfrastructure.Data.Interface;
 
 namespace RecruitmentCore.Queries
 {
@@ -14,14 +14,11 @@ namespace RecruitmentCore.Queries
         public class FetchWorkflowHandler : IRequestHandler<Query, GenericResponse<List<WorkflowDto>>>
         {
             private readonly IMapper _mapper;
-            private readonly CosmosDbService _dbService;
-            public FetchWorkflowHandler(IMapper mapper)
+            private readonly ICosmoDbService _dbService;
+            public FetchWorkflowHandler(IMapper mapper, ICosmoDbService dbService)
             {
                 _mapper = mapper;
-                string connectionString = "AccountEndpoint=https://localhost:8081;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;";
-                string databaseId = "RecruitmentApiDb";
-                string containerId = "RecruitmentApiContainer";
-                _dbService = new CosmosDbService(connectionString, databaseId, containerId);
+                _dbService = dbService;
             }
 
             public async Task<GenericResponse<List<WorkflowDto>>> Handle(Query request, CancellationToken cancellationToken)
