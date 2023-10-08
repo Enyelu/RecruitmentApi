@@ -6,15 +6,16 @@ namespace RecruitmentInfrastructure.Data
     public class CosmosDbService : ICosmoDbService
     {
         private readonly CosmosClient _cosmosClient;
-        private readonly string _databaseId;
-        private readonly string _containerId;
         private readonly Container _container;
 
-        public CosmosDbService(string connectionString, string databaseId, string containerId)
+        const string _connectionString = "AccountEndpoint=https://localhost:8081;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;";
+        const string _databaseId = "RecruitmentApiDb";
+        const string _containerId = "RecruitmentApiContainer";
+
+        public CosmosDbService()
         {
-            _cosmosClient = new CosmosClient(connectionString);
-            _databaseId = databaseId;
-            _containerId = containerId;
+            _cosmosClient = new CosmosClient(_connectionString);
+           
             _container = _cosmosClient.GetContainer(_databaseId, _containerId);
         }
 

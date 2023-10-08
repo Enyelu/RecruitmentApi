@@ -12,7 +12,7 @@ namespace RecruitmentApi.Extentions
             string databaseId = "RecruitmentApiDb";
             string containerId = "RecruitmentApiContainer";
 
-            services.AddSingleton(provider => new CosmosDbService(connectionString, databaseId, containerId));
+            services.AddSingleton(provider => new CosmosDbService());
         }
     }
 }

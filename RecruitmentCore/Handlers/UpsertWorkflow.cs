@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using RecruitmentCore.Common;
 using RecruitmentDomain.Entities;
-using RecruitmentInfrastructure.Data;
+using RecruitmentInfrastructure.Data.Interface;
 
 namespace RecruitmentCore.Handlers
 {
@@ -11,13 +11,10 @@ namespace RecruitmentCore.Handlers
 
         public class ApplicationDetailHandler : IRequestHandler<Command, GenericResponse<string>>
         {
-            private readonly CosmosDbService _dbService;
-            public ApplicationDetailHandler()
+            private readonly ICosmoDbService _dbService;
+            public ApplicationDetailHandler(ICosmoDbService dbService)
             {
-                string connectionString = "AccountEndpoint=https://localhost:8081;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;";
-                string databaseId = "RecruitmentApiDb";
-                string containerId = "RecruitmentApiContainer";
-                _dbService = new CosmosDbService(connectionString, databaseId, containerId);
+                _dbService = dbService;
             }
             public async Task<GenericResponse<string>> Handle(Command request, CancellationToken cancellationToken)
             {
