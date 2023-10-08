@@ -4,10 +4,10 @@ namespace RecruitmentDomain.Enums
 {
     public enum ProgramType
     {
-        [Description("FullTime")]
+        [Description("Full-Time")]
         FullTime,
 
-        [Description("PartTime")]
+        [Description("Part-Time")]
         PartTime,
 
         [Description("Contract")]

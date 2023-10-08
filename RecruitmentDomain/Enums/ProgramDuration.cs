@@ -38,6 +38,9 @@ namespace RecruitmentDomain.Enums
         Eleven,
 
         [Description("Twelve Months")]
-        Twelve
+        Twelve,
+
+        [Description("Permanent")]
+        Permanent
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RecruitmentApi.Extentions;
+using RecruitmentCore;
 using RecruitmentInfrastructure.Data;
-using RecruitmentInfrastructure.Data.Interface;
 
 
 var host = new WebHostBuilder()
@@ -16,7 +15,13 @@ var host = new WebHostBuilder()
                 services.AddControllers();
                 services.AddAntiforgery();
 
-                services.AddScoped<ICosmoDbService, CosmosDbService>();
+                
+
+                services.AddCore();
+
+
+
+              //  services.AddScoped<ICosmoDbService, CosmosDbService>();
 
                 services.ConfigureServices();
                 var serviceProvider = services.BuildServiceProvider();

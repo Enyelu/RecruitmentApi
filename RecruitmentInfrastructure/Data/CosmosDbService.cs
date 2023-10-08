@@ -52,9 +52,9 @@ namespace RecruitmentInfrastructure.Data
 
             while (resultSet.HasMoreResults)
             {
-                var response = await resultSet.ReadNextAsync();
-                items.AddRange(response);
-            }
+                    var response = await resultSet.ReadNextAsync();
+                    items.AddRange(response);
+                }
             return items;
         }
 
