@@ -8,7 +8,10 @@ namespace RecruitmentCore.Profiles
     {
         public CoreProfiles() 
         {
-            CreateMap<ProgramDetails, ProgramDetail>()
+            CreateMap<ProgramDetailsDto, ProgramDetail>()
+                   .ReverseMap();
+
+            CreateMap<ApplicationFormDto, ApplicationForm>()
                    .ReverseMap();
         }
     }

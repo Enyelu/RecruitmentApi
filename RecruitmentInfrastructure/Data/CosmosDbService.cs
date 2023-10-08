@@ -54,7 +54,7 @@ namespace RecruitmentInfrastructure.Data
             {
                     var response = await resultSet.ReadNextAsync();
                     items.AddRange(response);
-                }
+            }
             return items;
         }
 
